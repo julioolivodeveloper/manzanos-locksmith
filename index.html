@@ -112,6 +112,10 @@
   .hero-bg img {
     width: 100%; height: 100%; object-fit: cover; opacity: .55;
   }
+  @media(max-width:767px) {
+    .hero-bg img { content: url('homem.jpg'); opacity: .5; object-position: center top; }
+    .hero-bg::after { background: linear-gradient(to bottom, rgba(10,10,10,.25) 0%, rgba(10,10,10,.7) 55%, rgba(10,10,10,.95) 100%) !important; }
+  }
   .hero-bg::after {
     content: ''; position: absolute; inset: 0;
     background: linear-gradient(to right, rgba(10,10,10,.82) 35%, rgba(10,10,10,.45) 65%, rgba(10,10,10,.2));
