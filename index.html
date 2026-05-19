@@ -86,7 +86,7 @@
   }
   @media(min-width:768px){ .nav-inner { padding: 1rem 3rem; } }
   .nav-logo { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
-  .nav-logo img { width: 48px; height: 48px; object-fit: contain; }
+  .nav-logo img { width: 64px; height: 64px; object-fit: contain; }
   .nav-logo-text { line-height: 1.1; }
   .nav-logo-text span { display: block; }
   .nav-logo-text .name { font-weight: 900; font-size: 1.1rem; }
@@ -406,6 +406,39 @@
   .footer-right a:hover { color: var(--gold); }
   .footer-right a svg { width: 14px; height: 14px; }
 
+  /* ── RESEÑAS ── */
+  .reviews-grid {
+    display: grid; gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  @media(min-width:600px){ .reviews-grid { grid-template-columns: 1fr 1fr; } }
+  @media(min-width:900px){ .reviews-grid { grid-template-columns: 1fr 1fr 1fr; } }
+  .review-card {
+    background: linear-gradient(135deg, #111 0%, #161006 100%);
+    border: 1px solid rgba(212,160,23,.2); border-radius: 1.25rem;
+    padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;
+    transition: transform .3s, border-color .3s, box-shadow .3s;
+  }
+  .review-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(212,160,23,.5);
+    box-shadow: 0 20px 40px rgba(212,160,23,.1);
+  }
+  .review-stars { display: flex; gap: 3px; }
+  .review-text {
+    color: #cbd5e1; font-size: .9rem; line-height: 1.65;
+    flex: 1; font-style: italic;
+  }
+  .review-text::before { content: '\201C'; color: var(--gold); font-size: 1.5rem; line-height: 0; vertical-align: -.3em; margin-right: .1rem; font-style: normal; }
+  .review-author { display: flex; align-items: center; gap: .75rem; margin-top: .25rem; }
+  .review-avatar {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 1rem; color: #fff;
+  }
+  .review-author strong { display: block; font-size: .9rem; color: #fff; }
+  .review-author span  { display: block; font-size: .75rem; color: var(--muted); margin-top: .1rem; }
+
   /* SVG icons */
   svg { display: inline-block; vertical-align: middle; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 </style>
@@ -712,6 +745,138 @@
       </div>
       <div class="gallery-item reveal reveal-delay-2">
         <img src="local.jpg" alt="Local Richmond CA" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESEÑAS ── -->
+<section id="resenas" style="background:var(--bg);padding:6rem 0;">
+  <div class="max-w px">
+    <div class="reveal center" style="margin-bottom:3.5rem;">
+      <p class="section-label">Lo que dicen nuestros clientes</p>
+      <h2 class="section-title">Reseñas <span class="text-gold">Verificadas</span></h2>
+      <div style="display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:1rem;">
+        <div style="display:flex;gap:3px;">
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <span style="color:var(--gold);font-weight:900;font-size:1.1rem;">5.0</span>
+        <span style="color:var(--muted);font-size:.9rem;">· 120+ reseñas en Google</span>
+      </div>
+    </div>
+
+    <div class="reviews-grid reveal">
+      <!-- Card 1 -->
+      <div class="review-card">
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="review-text">"Se me quebró la llave adentro de la chapa y en menos de 20 minutos ya estaban aquí. La sacaron sin dañar nada. Excelente servicio y muy buen precio. Los recomiendo al 100%."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#7c3aed;">M</div>
+          <div>
+            <strong>María G.</strong>
+            <span>Richmond, CA · hace 1 semana</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="review-card">
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="review-text">"Necesitaba una llave electrónica con chip para mi Honda y me la hicieron al momento. Precio muy accesible comparado con el dealer. Ya la tengo programada y funciona perfecto."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#0891b2;">C</div>
+          <div>
+            <strong>Carlos R.</strong>
+            <span>San Pablo, CA · hace 2 semanas</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="review-card">
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="review-text">"Me quedé sin llaves de mi Ford F-150 y Manzano vino a mi casa. En 30 minutos tenía llaves nuevas y el switch de encendido cambiado. Trabajo de calidad y muy honesto con los precios."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#b45309;">J</div>
+          <div>
+            <strong>José L.</strong>
+            <span>El Cerrito, CA · hace 1 mes</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="review-card">
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="review-text">"Fui a pedir duplicados para mi Toyota Camry y me costó muy poco. Además me ayudaron con la manija de la puerta que estaba rota. Muy atentos y rápidos. Ya los tengo guardados en mis contactos."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#047857;">A</div>
+          <div>
+            <strong>Ana P.</strong>
+            <span>Oakland, CA · hace 3 semanas</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="review-card">
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="review-text">"Tenía mi puerta trabada y no podía entrar a mi carro. Llamé a Manzano's y llegaron súper rápido. Lo abrieron sin rayar nada. Muy profesionales. Precios justos y sin sorpresas."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#be185d;">L</div>
+          <div>
+            <strong>Luis M.</strong>
+            <span>Berkeley, CA · hace 2 meses</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 6 -->
+      <div class="review-card">
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="review-text">"El mejor cerrajero del Bay Area sin duda. Fui por un señalero para mi Nissan y me lo programaron en minutos. También me hicieron un duplicado de llave por solo $2. No hay precios así en ningún lado."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:#1d4ed8;">R</div>
+          <div>
+            <strong>Rosa V.</strong>
+            <span>Richmond, CA · hace 1 mes</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
