@@ -1135,12 +1135,17 @@ let currentLang = 'es';
 
 function applyLang(lang) {
   currentLang = lang;
+  chatLang = lang;
   document.querySelectorAll('[data-t]').forEach(el => {
     const key = el.getAttribute('data-t');
     if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
   });
   document.getElementById('btn-es').classList.toggle('active', lang === 'es');
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  const chatBtnEs = document.getElementById('chat-btn-es');
+  const chatBtnEn = document.getElementById('chat-btn-en');
+  if (chatBtnEs) chatBtnEs.classList.toggle('active', lang === 'es');
+  if (chatBtnEn) chatBtnEn.classList.toggle('active', lang === 'en');
   document.getElementById('chat-online').textContent = lang === 'es' ? '● En línea ahora' : '● Online now';
   document.getElementById('chat-input').placeholder = lang === 'es' ? 'Escribe tu pregunta...' : 'Type your question...';
   updateChatQuickReplies(lang);
@@ -1444,13 +1449,6 @@ function setLang(lang) { applyLang(lang); }
 let chatLang = 'es';
 
 function setChatLang(lang) {
-  chatLang = lang;
-  document.getElementById('chat-btn-es').classList.toggle('active', lang === 'es');
-  document.getElementById('chat-btn-en').classList.toggle('active', lang === 'en');
-  document.getElementById('chat-online').textContent = lang === 'es' ? '● En línea ahora' : '● Online now';
-  document.getElementById('chat-input').placeholder = lang === 'es' ? 'Escribe tu pregunta...' : 'Type your question...';
-  updateChatQuickReplies(lang);
-  // sync with page lang toggle
   applyLang(lang);
 }
 
