@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Manzano's Locksmith — Cerrajería Richmond CA</title>
+<meta name="description" content="Cerrajería profesional en Richmond CA. Llaves electrónicas, duplicados desde $2, puertas trabadas, switches de encendido. Tel: (510) 812-8740" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #D4A017;
+    --gold-light: #f5d878;
+    --gold-dark: #b8860b;
+    --bg: #0a0a0a;
+    --bg2: #0d0d0d;
+    --text: #ffffff;
+    --muted: #94a3b8;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; }
+
+  /* ── UTILS ── */
+  .max-w { max-width: 1200px; margin: 0 auto; }
+  .px { padding-left: 2rem; padding-right: 2rem; }
+  @media(min-width:768px){ .px { padding-left: 3rem; padding-right: 3rem; } }
+
+  .text-gold {
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-light) 70%, var(--gold-dark) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+  @keyframes shimmer { from { background-position: -200% center; } to { background-position: 200% center; } }
+
+  .btn-gold {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: var(--gold); color: #000; border: none; cursor: pointer;
+    padding: .75rem 1.75rem; border-radius: .875rem; font-weight: 900; font-size: .95rem;
+    text-decoration: none; transition: transform .2s, background .2s;
+    white-space: nowrap;
+    box-shadow: 0 0 30px rgba(212,160,23,.35);
+    animation: pulse-gold 2.5s ease-in-out infinite;
+  }
+  .btn-gold svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .btn-gold:hover { background: var(--gold-light); transform: scale(1.05); }
+  @keyframes pulse-gold {
+    0%,100% { box-shadow: 0 0 20px rgba(212,160,23,.3); }
+    50%      { box-shadow: 0 0 45px rgba(212,160,23,.65); }
+  }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: .6rem;
+    border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.05);
+    color: #fff; padding: 1rem 2rem; border-radius: 1rem; font-weight: 600;
+    font-size: 1rem; text-decoration: none; transition: border-color .2s, background .2s;
+  }
+  .btn-outline:hover { border-color: rgba(212,160,23,.5); background: rgba(212,160,23,.1); }
+
+  /* ── ANIMATIONS ── */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: .1s; }
+  .reveal-delay-2 { transition-delay: .2s; }
+  .reveal-delay-3 { transition-delay: .3s; }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+  }
+  .float { animation: float 3.5s ease-in-out infinite; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,10,.9); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212,160,23,.15);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2rem;
+  }
+  @media(min-width:768px){ .nav-inner { padding: 1rem 3rem; } }
+  .nav-logo { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
+  .nav-logo img { width: 48px; height: 48px; object-fit: contain; }
+  .nav-logo-text { line-height: 1.1; }
+  .nav-logo-text span { display: block; }
+  .nav-logo-text .name { font-weight: 900; font-size: 1.1rem; }
+  .nav-logo-text .sub  { font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+  .nav-tel {
+    display: flex; align-items: center; gap: .5rem;
+    background: var(--gold); color: #000; padding: .6rem 1.2rem; border-radius: .75rem;
+    font-weight: 900; font-size: .9rem; text-decoration: none;
+    transition: background .2s, transform .2s;
+    animation: pulse-gold 2.5s ease-in-out infinite;
+  }
+  .nav-tel:hover { background: var(--gold-light); transform: scale(1.04); }
+  .nav-tel svg { width: 16px; height: 16px; }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative; min-height: 100vh; display: flex; align-items: center;
+    padding-top: 80px; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+  }
+  .hero-bg img {
+    width: 100%; height: 100%; object-fit: cover; opacity: .55;
+  }
+  .hero-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(10,10,10,.82) 35%, rgba(10,10,10,.45) 65%, rgba(10,10,10,.2));
+  }
+  .hero-overlay-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+    background: linear-gradient(to top, #0a0a0a, transparent);
+    z-index: 1;
+  }
+  .hero-content {
+    position: relative; z-index: 2; padding: 5rem 2rem;
+  }
+  @media(min-width:768px){ .hero-content { padding: 5rem 3rem; } }
+  .hero-tag {
+    display: flex; align-items: center; gap: .75rem; margin-bottom: 1.5rem;
+  }
+  .hero-tag .line { width: 2rem; height: 2px; background: var(--gold); }
+  .hero-tag span { color: var(--gold); font-weight: 700; font-size: .8rem; text-transform: uppercase; letter-spacing: .15em; }
+  .hero-h1 {
+    font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 900; line-height: .9;
+    text-transform: uppercase; margin-bottom: 1.5rem; letter-spacing: -.02em;
+  }
+  .hero-p { color: var(--muted); font-size: 1.2rem; margin-bottom: 1.5rem; line-height: 1.6; max-width: 520px; }
+  .hero-p strong { color: var(--gold-light); }
+  .badges { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 2.5rem; }
+  .badge {
+    display: flex; align-items: center; gap: .5rem;
+    border: 1px solid rgba(212,160,23,.3); border-radius: 999px;
+    padding: .4rem 1.2rem; font-size: .85rem; font-weight: 700;
+    background: rgba(212,160,23,.08);
+  }
+  .badge svg { width: 14px; height: 14px; color: var(--gold); }
+  .hero-btns { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .hero-logo-float {
+    position: absolute; right: 3rem; top: 50%; transform: translateY(-50%);
+    display: none;
+  }
+  @media(min-width:1200px){ .hero-logo-float { display: block; } }
+  .hero-logo-float::before {
+    content: ''; position: absolute; inset: -2rem;
+    background: rgba(212,160,23,.08); border-radius: 50%; filter: blur(40px);
+  }
+  .hero-logo-float img { position: relative; width: 280px; height: 280px; object-fit: contain; }
+
+  /* Particles */
+  .particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+  .particle {
+    position: absolute; width: 4px; height: 4px; background: var(--gold);
+    border-radius: 50%; opacity: 0;
+    animation: particle-float 4s ease-in-out infinite;
+  }
+  @keyframes particle-float {
+    0%   { opacity: 0; transform: translateY(0); }
+    25%  { opacity: .5; }
+    75%  { opacity: .3; }
+    100% { opacity: 0; transform: translateY(-80px); }
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+    padding: .9rem 0; overflow: hidden;
+  }
+  .marquee-track {
+    display: flex; gap: 4rem; width: max-content;
+    animation: marquee 22s linear infinite;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-item {
+    display: flex; align-items: center; gap: 1rem; flex-shrink: 0;
+    font-weight: 900; font-size: 1rem; text-transform: uppercase;
+    letter-spacing: .08em; color: #000; white-space: nowrap;
+  }
+  .marquee-item svg { width: 18px; height: 18px; }
+
+  /* ── SECTIONS COMMON ── */
+  section { padding: 6rem 0; }
+  .section-label { color: var(--gold); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; margin-bottom: .75rem; }
+  .section-title { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; text-transform: uppercase; margin-bottom: 1rem; line-height: 1; }
+  .section-desc { color: var(--muted); font-size: 1.1rem; max-width: 520px; line-height: 1.6; }
+  .center { text-align: center; }
+  .center .section-desc { margin: 0 auto; }
+
+  /* ── SERVICIOS ── */
+  #servicios { background: var(--bg2); }
+  .services-grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: 1.25rem; margin-top: 3.5rem;
+  }
+  @media(min-width:600px){ .services-grid { grid-template-columns: 1fr 1fr; } }
+  @media(min-width:900px){ .services-grid { grid-template-columns: 1fr 1fr 1fr; } }
+  .service-card {
+    position: relative; overflow: hidden;
+    display: flex; align-items: flex-end; gap: 1rem; padding: 1.5rem;
+    border: 1px solid rgba(212,160,23,.25); border-radius: 1.25rem;
+    min-height: 180px;
+    transition: transform .35s, border-color .35s, box-shadow .35s;
+  }
+  .service-card .sc-bg {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    opacity: .55; transition: opacity .4s, transform .4s;
+  }
+  .service-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,.88) 30%, rgba(10,10,10,.35) 65%, rgba(10,10,10,.1));
+    border-radius: inherit;
+  }
+  .service-card:hover { transform: translateY(-5px); border-color: rgba(212,160,23,.6); box-shadow: 0 20px 40px rgba(212,160,23,.18); }
+  .service-card:hover .sc-bg { opacity: .5; transform: scale(1.06); }
+  .service-card-body { position: relative; z-index: 2; display: flex; align-items: flex-end; gap: 1rem; width: 100%; }
+  .service-icon {
+    width: 44px; height: 44px; border-radius: .75rem; flex-shrink: 0;
+    background: rgba(212,160,23,.2); border: 1px solid rgba(212,160,23,.3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .service-icon svg { width: 22px; height: 22px; color: var(--gold); }
+  .service-card h3 { font-weight: 900; font-size: 1rem; margin-bottom: .2rem; }
+  .service-card p  { color: var(--muted); font-size: .82rem; line-height: 1.4; }
+
+  /* ── LLAVES ELEC ── */
+  #llaves {
+    position: relative; overflow: hidden;
+  }
+  .bg-img-section { position: absolute; inset: -60px; }
+  .bg-img-section img {
+    width: 100%; height: calc(100% + 120px); object-fit: cover; opacity: .8;
+    transition: transform .1s linear;
+    will-change: transform;
+  }
+  .bg-img-section::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,.82) 35%, rgba(10,10,10,.35) 65%, rgba(10,10,10,.1)); }
+  .llaves-content { position: relative; z-index: 2; max-width: 640px; }
+
+  /* Mobile bg alternativo */
+  .llaves-mobile-bg { display: none; position: absolute; inset: 0; }
+  .llaves-mobile-bg img { width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+  .llaves-mobile-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(10,10,10,.3) 0%, rgba(10,10,10,.75) 60%, rgba(10,10,10,.95) 100%);
+  }
+  @media(max-width: 767px) {
+    .bg-img-section { display: none; }
+    .llaves-mobile-bg { display: block; }
+  }
+  .feature-list { list-style: none; margin: 1.5rem 0 2.5rem; display: flex; flex-direction: column; gap: .75rem; }
+  .feature-list li { display: flex; align-items: center; gap: .75rem; color: var(--muted); }
+  .feature-list li::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+  /* ── SWITCHES ── */
+  #switches { background: var(--bg2); position: relative; overflow: hidden; }
+  .switches-bg { position: absolute; inset: 0; }
+  .switches-bg img { width: 100%; height: 100%; object-fit: cover; opacity: .08; }
+  .switches-bg::after { content: ''; position: absolute; inset: 0; background: rgba(13,13,13,.75); }
+  .switches-content { position: relative; z-index: 2; }
+  .pills { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; margin: 3rem 0; }
+  .pill {
+    padding: .6rem 1.5rem; border-radius: 999px;
+    border: 1px solid rgba(212,160,23,.3); background: rgba(212,160,23,.08);
+    font-weight: 900; font-size: .85rem; text-transform: uppercase;
+    letter-spacing: .08em; color: var(--gold-light);
+    transition: background .2s, border-color .2s;
+  }
+  .pill:hover { background: rgba(212,160,23,.2); border-color: rgba(212,160,23,.6); }
+  .price-badge {
+    display: inline-flex; align-items: center; gap: 1rem;
+    background: rgba(212,160,23,.1); border: 1px solid rgba(212,160,23,.3);
+    border-radius: 1.25rem; padding: 1.5rem 2.5rem; margin-top: 1rem;
+  }
+  .price-badge svg { width: 32px; height: 32px; color: var(--gold); }
+  .price-badge p   { font-size: 1.4rem; font-weight: 900; }
+  .price-badge small { display: block; color: var(--muted); font-size: .8rem; margin-top: .25rem; }
+
+  /* ── VOLANTES ── */
+  #volantes { background: var(--bg); position: relative; overflow: hidden; }
+  .volantes-grid { display: grid; grid-template-columns: 1fr; gap: 4rem; align-items: center; }
+  @media(min-width:900px){ .volantes-grid { grid-template-columns: 1fr 1fr; } }
+  .brand-pills { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.5rem 0 2rem; }
+  .brand-pill {
+    padding: .45rem 1rem; border-radius: .5rem;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+    color: var(--muted); font-weight: 600; font-size: .85rem;
+  }
+  .img-glow { position: relative; }
+  .img-glow::before {
+    content: ''; position: absolute; inset: -1.5rem;
+    background: rgba(212,160,23,.08); border-radius: 1.5rem; filter: blur(30px);
+  }
+  .img-glow img { position: relative; width: 100%; border-radius: 1.25rem; border: 1px solid rgba(212,160,23,.2); box-shadow: 0 30px 60px rgba(0,0,0,.5); }
+
+  /* Mobile: volante de fondo */
+  .volantes-mobile-bg { display: none; }
+  @media(max-width:899px) {
+    .volantes-mobile-bg {
+      display: block; position: absolute; inset: 0; z-index: 0;
+    }
+    .volantes-mobile-bg img {
+      width: 100%; height: 100%; object-fit: cover; opacity: .35;
+    }
+    .volantes-mobile-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,10,.5) 0%, rgba(10,10,10,.85) 100%);
+    }
+    .volantes-grid { position: relative; z-index: 1; }
+    .img-glow { display: none; }
+  }
+
+  /* ── GALERÍA ── */
+  #galeria { background: var(--bg2); }
+  .gallery-grid {
+    display: grid; gap: 1rem; margin-top: 3rem;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  @media(min-width:768px){
+    .gallery-grid {
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 260px 260px;
+    }
+    .gallery-grid .g-big { grid-row: span 2; }
+  }
+  .gallery-item {
+    overflow: hidden; border-radius: 1rem;
+    border: 1px solid rgba(212,160,23,.12);
+    transition: border-color .3s;
+  }
+  .gallery-item:hover { border-color: rgba(212,160,23,.4); }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    aspect-ratio: 1;
+    transition: transform .5s ease;
+  }
+  @media(min-width:768px){ .gallery-item img { aspect-ratio: unset; } }
+  .gallery-item:hover img { transform: scale(1.06); }
+
+  /* ── CTA ── */
+  #cta { position: relative; overflow: hidden; text-align: center; }
+  .cta-bg { position: absolute; inset: 0; }
+  .cta-bg img { width: 100%; height: 100%; object-fit: cover; opacity: .18; }
+  .cta-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, #0a0a0a 0%, rgba(10,10,10,.75) 50%, #0a0a0a 100%);
+  }
+  .cta-content { position: relative; z-index: 2; padding: 6rem 2rem; }
+  @media(min-width:768px){ .cta-content { padding: 6rem 3rem; } }
+  .cta-logo { position: relative; display: inline-block; margin-bottom: 2rem; }
+  .cta-logo::before {
+    content: ''; position: absolute; inset: -1.5rem;
+    background: rgba(212,160,23,.1); border-radius: 50%; filter: blur(25px);
+  }
+  .cta-logo img { position: relative; width: 110px; height: 110px; object-fit: contain; }
+  .cta-h2 { font-size: clamp(2.8rem, 8vw, 5.5rem); font-weight: 900; text-transform: uppercase; margin-bottom: 1rem; line-height: 1; }
+  .cta-p { color: var(--muted); font-size: 1.2rem; margin-bottom: 2.5rem; }
+  .cta-p strong { color: var(--gold-light); }
+  .cta-tel {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: var(--gold); color: #000; padding: .9rem 2.2rem; border-radius: 1rem;
+    font-weight: 900; font-size: 1.2rem; text-decoration: none;
+    white-space: nowrap;
+    transition: background .2s, transform .2s;
+    box-shadow: 0 0 50px rgba(212,160,23,.45);
+    animation: pulse-gold 2.5s ease-in-out infinite;
+  }
+  .cta-tel:hover { background: var(--gold-light); transform: scale(1.04); }
+  .cta-tel svg { width: 28px; height: 28px; }
+  .cta-info {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem;
+    margin-top: 2.5rem; color: var(--muted);
+  }
+  .cta-info-item { display: flex; align-items: center; gap: .5rem; font-size: .95rem; }
+  .cta-info-item svg { width: 18px; height: 18px; color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060606; border-top: 1px solid rgba(212,160,23,.1);
+    padding: 2.5rem 2rem;
+  }
+  @media(min-width:768px){ footer { padding: 2.5rem 3rem; } }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem;
+  }
+  .footer-logo { display: flex; align-items: center; gap: .75rem; }
+  .footer-logo img { width: 40px; height: 40px; object-fit: contain; }
+  .footer-logo-text .name { font-weight: 900; font-size: .95rem; }
+  .footer-logo-text .addr { font-size: .75rem; color: #4b5563; margin-top: .15rem; }
+  .footer-right { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; color: #4b5563; font-size: .85rem; }
+  .footer-right a { color: #94a3b8; text-decoration: none; display: flex; align-items: center; gap: .35rem; transition: color .2s; font-weight: 600; }
+  .footer-right a:hover { color: var(--gold); }
+  .footer-right a svg { width: 14px; height: 14px; }
+
+  /* SVG icons */
+  svg { display: inline-block; vertical-align: middle; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner max-w">
+    <a href="#" class="nav-logo">
+      <img src="logo.png" alt="Manzano's Locksmith" class="float" />
+      <div class="nav-logo-text">
+        <span class="name text-gold">Manzano's</span>
+        <span class="sub">Locksmith</span>
+      </div>
+    </a>
+    <a href="tel:+15108128740" class="nav-tel">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      (510) 812-8740
+    </a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg">
+    <img src="encendido.jpg" alt="" />
+  </div>
+  <div class="hero-overlay-bottom"></div>
+  <div class="particles">
+    <div class="particle" style="left:12%;top:30%;animation-delay:0s;animation-duration:4s"></div>
+    <div class="particle" style="left:25%;top:60%;animation-delay:.8s;animation-duration:5s"></div>
+    <div class="particle" style="left:40%;top:25%;animation-delay:1.5s;animation-duration:3.5s"></div>
+    <div class="particle" style="left:60%;top:50%;animation-delay:.3s;animation-duration:4.5s"></div>
+    <div class="particle" style="left:75%;top:35%;animation-delay:2s;animation-duration:4s"></div>
+    <div class="particle" style="left:88%;top:65%;animation-delay:1s;animation-duration:3.8s"></div>
+  </div>
+  <div class="hero-content max-w px reveal visible">
+    <div class="hero-tag">
+      <div class="line"></div>
+      <span>Richmond, CA &bull; Servicio a Domicilio &bull; Bay Area</span>
+    </div>
+    <h1 class="hero-h1">
+      Manzano's<br>
+      <span class="text-gold">Locksmith</span>
+    </h1>
+    <p class="hero-p">
+      Cerrajería profesional con <strong>bajos precios.</strong>
+      Llaves electrónicas, duplicados, puertas trabadas y más.
+    </p>
+    <div class="badges">
+      <div class="badge">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Bajos Precios
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Servicio Rápido
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Confiable
+      </div>
+    </div>
+    <div class="hero-btns">
+      <a href="tel:+15108128740" class="btn-gold">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (510) 812-8740
+      </a>
+      <a href="#servicios" class="btn-outline">
+        Ver Servicios
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-logo-float">
+    <img src="logo.png" alt="Logo" class="float" />
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <!-- duplicated for infinite loop -->
+    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Duplicados desde $2</div>
+    <div class="marquee-item" style="opacity:.4">&bull;</div>
+    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Bajos Precios en Llaves</div>
+    <div class="marquee-item" style="opacity:.4">&bull;</div>
+    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Servicio a Domicilio</div>
+    <div class="marquee-item" style="opacity:.4">&bull;</div>
+    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Duplicados desde $2</div>
+    <div class="marquee-item" style="opacity:.4">&bull;</div>
+    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Bajos Precios en Llaves</div>
+    <div class="marquee-item" style="opacity:.4">&bull;</div>
+    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Servicio a Domicilio</div>
+    <div class="marquee-item" style="opacity:.4">&bull;</div>
+  </div>
+</div>
+
+<!-- ── SERVICIOS ── -->
+<section id="servicios">
+  <div class="max-w px">
+    <div class="reveal center">
+      <p class="section-label">Lo que hacemos</p>
+      <h2 class="section-title">Nuestros <span class="text-gold">Servicios</span></h2>
+      <p class="section-desc">Soluciones de cerrajería para tu carro y hogar. Rápido, confiable y a precios accesibles.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="sc-bg" style="background-image:url('llaves-quebradas.jpg')"></div>
+        <div class="service-card-body">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></div>
+          <div><h3>Llaves Quebradas</h3><p>Extracción profesional sin dañar la chapa</p></div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="sc-bg" style="background-image:url('chapas.jpg')"></div>
+        <div class="service-card-body">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <div><h3>Chapas de Puerta</h3><p>Instalación y reparación de cerraduras</p></div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="sc-bg" style="background-image:url('llaves-perdidas.jpg')"></div>
+        <div class="service-card-body">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <div><h3>Llaves Perdidas</h3><p>Duplicados y reemplazos rápidos</p></div>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="sc-bg" style="background-image:url('switch.jpg')"></div>
+        <div class="service-card-body">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
+          <div><h3>Switch de Encendido</h3><p>Venta e instalación de switch de encendido</p></div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="sc-bg" style="background-image:url('manijas.jpg')"></div>
+        <div class="service-card-body">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+          <div><h3>Manijas de Puertas</h3><p>Reparación y reemplazo de manijas</p></div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="sc-bg" style="background-image:url('puertas-trabadas.jpg')"></div>
+        <div class="service-card-body">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div>
+          <div><h3>Puertas Trabadas</h3><p>Apertura sin daños, servicio rápido</p></div>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="sc-bg" style="background-image:url('senaleros.jpg')"></div>
+        <div class="service-card-body">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg></div>
+          <div><h3>Señaleros de Carro</h3><p>Programación y reemplazo de control remoto</p></div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="sc-bg" style="background-image:url('domicilio.jpg')"></div>
+        <div class="service-card-body">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div><h3>Servicio a Domicilio</h3><p>Vamos a donde nos necesites</p></div>
+        </div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="sc-bg" style="background-image:url('pick-lock.jpg')"></div>
+        <div class="service-card-body">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></div>
+          <div><h3>Pick the Lock</h3><p>Apertura de cerraduras de alta seguridad</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LLAVES ELECTRÓNICAS ── -->
+<section id="llaves" style="padding:7rem 0;">
+  <div class="bg-img-section" id="llaves-bg">
+    <img src="llaveselectronicas.jpg" alt="" id="llaves-img" />
+  </div>
+  <div class="llaves-mobile-bg">
+    <img src="llaves-auto.jpg" alt="" />
+  </div>
+  <div class="max-w px">
+    <div class="llaves-content reveal">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <p class="section-label" style="margin:0">Alta Tecnología</p>
+      </div>
+      <h2 class="section-title">Llaves <span class="text-gold">Electrónicas</span></h2>
+      <p style="color:var(--muted);font-size:1.15rem;margin-bottom:1rem;line-height:1.6;">
+        Llaves con <strong style="color:var(--gold-light)">chip para carros nuevos.</strong>
+        Programación y corte de llaves electrónicas para todo tipo de vehículo.
+      </p>
+      <ul class="feature-list">
+        <li>Llaves transponder con chip</li>
+        <li>Programación en sitio</li>
+        <li>Fobs y controles remotos</li>
+        <li>Precios accesibles</li>
+      </ul>
+      <a href="tel:+15108128740" class="btn-gold">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Llamar ahora
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── SWITCHES ── -->
+<section id="switches" style="padding:7rem 0;">
+  <div class="switches-bg">
+    <img src="encendido.jpg" alt="" />
+  </div>
+  <div class="switches-content max-w px">
+    <div class="reveal center">
+      <p class="section-label">Venta e Instalación</p>
+      <h2 class="section-title">Switches de <span class="text-gold">Encendido</span></h2>
+      <p class="section-desc" style="margin:0 auto;">Vendemos e instalamos switches de encendido para las marcas más populares.</p>
+    </div>
+    <div class="pills reveal">
+      <div class="pill">Honda</div>
+      <div class="pill">Ford</div>
+      <div class="pill">Nissan</div>
+      <div class="pill">Chevy</div>
+      <div class="pill">Toyota</div>
+      <div class="pill">Dodge</div>
+      <div class="pill">Jeep</div>
+      <div class="pill">Buick</div>
+      <div class="pill">Oldsmobile</div>
+      <div class="pill">Cadillac</div>
+      <div class="pill">Mitsubishi</div>
+      <div class="pill">Y más...</div>
+    </div>
+    <div class="reveal" style="text-align:center;">
+      <div class="price-badge">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <div>
+          <p>Duplicados desde <span class="text-gold">$2</span></p>
+          <small>Precios de mayoreo &bull; Calidad garantizada</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VOLANTES ── -->
+<section id="volantes">
+  <div class="volantes-mobile-bg">
+    <img src="volante2.jpg" alt="" />
+  </div>
+  <div class="max-w px">
+    <div class="volantes-grid">
+      <div class="reveal">
+        <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h10M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <p class="section-label" style="margin:0">Reparación y Venta</p>
+        </div>
+        <h2 class="section-title">Volantes de <span class="text-gold">Carro</span></h2>
+        <p style="color:var(--muted);font-size:1.1rem;margin-bottom:1.5rem;line-height:1.6;">
+          Reparamos y vendemos volantes para múltiples marcas y modelos. Servicio profesional y garantizado.
+        </p>
+        <div class="brand-pills">
+          <span class="brand-pill">Chevy</span>
+          <span class="brand-pill">Ford</span>
+          <span class="brand-pill">Buick</span>
+          <span class="brand-pill">Oldsmobile</span>
+          <span class="brand-pill">Jeep</span>
+          <span class="brand-pill">Dodge</span>
+          <span class="brand-pill">Cadillac</span>
+          <span class="brand-pill">Honda</span>
+          <span class="brand-pill">Mitsubishi</span>
+        </div>
+        <a href="tel:+15108128740" class="btn-gold" style="margin-top:.5rem;">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Consultar precio
+        </a>
+      </div>
+      <div class="img-glow reveal reveal-delay-2">
+        <img src="volante2.jpg" alt="Volante de carro" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GALERÍA ── -->
+<section id="galeria" style="background:var(--bg2);">
+  <div class="max-w px">
+    <div class="reveal center">
+      <p class="section-label">Nuestro Trabajo</p>
+      <h2 class="section-title"><span class="text-gold">Galería</span></h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item g-big reveal">
+        <img src="cerrajero.jpg" alt="Cerrajero profesional" />
+      </div>
+      <div class="gallery-item reveal reveal-delay-1">
+        <img src="llave-carro.jpg" alt="Llave electrónica" />
+      </div>
+      <div class="gallery-item reveal reveal-delay-2">
+        <img src="encendido.jpg" alt="Switch encendido" />
+      </div>
+      <div class="gallery-item reveal reveal-delay-1">
+        <img src="camioneta.jpg" alt="Camioneta de servicio" />
+      </div>
+      <div class="gallery-item reveal reveal-delay-2">
+        <img src="local.jpg" alt="Local Richmond CA" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section id="cta">
+  <div class="cta-bg">
+    <img src="local.jpg" alt="" />
+  </div>
+  <div class="cta-content reveal">
+    <div class="cta-logo">
+      <img src="logo.png" alt="Logo" class="float" />
+    </div>
+    <h2 class="cta-h2">¿Necesitas <span class="text-gold">Ayuda?</span></h2>
+    <p class="cta-p">
+      Llámanos ahora. Atendemos en Richmond y áreas cercanas.<br>
+      <strong>Servicio a domicilio disponible.</strong>
+    </p>
+    <a href="tel:+15108128740" class="cta-tel">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      (510) 812-8740
+    </a>
+    <div class="cta-info">
+      <div class="cta-info-item">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        991 13th Street, Richmond, CA 94801
+      </div>
+      <div class="cta-info-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Lun – Sáb &middot; 9am – 7pm
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="logo.png" alt="Logo" />
+      <div class="footer-logo-text">
+        <p class="name text-gold">Manzano's Locksmith</p>
+        <p class="addr">991 13th Street, Richmond, CA 94801</p>
+      </div>
+    </div>
+    <div class="footer-right">
+      <a href="tel:+15108128740">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (510) 812-8740
+      </a>
+      <span>&copy; 2024 Manzano's Locksmith. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  reveals.forEach(el => { if (!el.classList.contains('visible')) observer.observe(el); });
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Parallax mouse effect — sección llaves electrónicas
+  const llavesSection = document.getElementById('llaves');
+  const llavesImg = document.getElementById('llaves-img');
+  if (llavesSection && llavesImg) {
+    llavesSection.addEventListener('mousemove', (e) => {
+      const rect = llavesSection.getBoundingClientRect();
+      const yRatio = (e.clientY - rect.top) / rect.height; // 0 arriba, 1 abajo
+      const xRatio = (e.clientX - rect.left) / rect.width;
+      const moveY = (yRatio - 0.5) * -30; // -15px a +15px
+      const moveX = (xRatio - 0.5) * -15;
+      llavesImg.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.05)`;
+    });
+    llavesSection.addEventListener('mouseleave', () => {
+      llavesImg.style.transform = 'translate(0,0) scale(1)';
+    });
+  }
+</script>
+</body>
+</html>
