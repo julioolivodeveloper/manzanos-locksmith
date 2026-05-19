@@ -100,6 +100,17 @@
   }
   .nav-tel:hover { background: var(--gold-light); transform: scale(1.04); }
   .nav-tel svg { width: 16px; height: 16px; }
+  .lang-toggle {
+    display: flex; align-items: center; gap: 0;
+    border: 1px solid rgba(212,160,23,.35); border-radius: .75rem; overflow: hidden;
+  }
+  .lang-btn {
+    padding: .45rem .8rem; font-size: .8rem; font-weight: 900; cursor: pointer;
+    border: none; background: transparent; color: var(--muted);
+    transition: background .2s, color .2s; letter-spacing: .05em;
+  }
+  .lang-btn.active { background: var(--gold); color: #000; }
+  .lang-btn:not(.active):hover { background: rgba(212,160,23,.15); color: #fff; }
 
   /* ── HERO ── */
   #hero {
@@ -515,10 +526,16 @@
         <span class="sub">Locksmith</span>
       </div>
     </a>
-    <a href="tel:+15108128740" class="nav-tel">
-      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      (510) 812-8740
-    </a>
+    <div style="display:flex;align-items:center;gap:.75rem;">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+      <a href="tel:+15108128740" class="nav-tel">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (510) 812-8740
+      </a>
+    </div>
   </div>
 </nav>
 
@@ -539,28 +556,28 @@
   <div class="hero-content max-w px reveal visible">
     <div class="hero-tag">
       <div class="line"></div>
-      <span>Richmond, CA &bull; Servicio a Domicilio &bull; Bay Area</span>
+      <span data-t="hero.tag">Richmond, CA &bull; Servicio a Domicilio &bull; Bay Area</span>
     </div>
     <h1 class="hero-h1">
       Manzano's<br>
       <span class="text-gold">Locksmith</span>
     </h1>
-    <p class="hero-p">
+    <p class="hero-p" data-t="hero.desc">
       Cerrajería profesional con <strong>bajos precios.</strong>
       Llaves electrónicas, duplicados, puertas trabadas y más.
     </p>
     <div class="badges">
       <div class="badge">
         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        Bajos Precios
+        <span data-t="badge.price">Bajos Precios</span>
       </div>
       <div class="badge">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Servicio Rápido
+        <span data-t="badge.fast">Servicio Rápido</span>
       </div>
       <div class="badge">
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Confiable
+        <span data-t="badge.trust">Confiable</span>
       </div>
     </div>
     <div class="hero-btns">
@@ -569,7 +586,7 @@
         (510) 812-8740
       </a>
       <a href="#servicios" class="btn-outline">
-        Ver Servicios
+        <span data-t="hero.cta">Ver Servicios</span>
         <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
       </a>
     </div>
@@ -583,17 +600,17 @@
 <div class="marquee-wrap">
   <div class="marquee-track">
     <!-- duplicated for infinite loop -->
-    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Duplicados desde $2</div>
+    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg><span data-t="marquee.dup">Duplicados desde $2</span></div>
     <div class="marquee-item" style="opacity:.4">&bull;</div>
-    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Bajos Precios en Llaves</div>
+    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg><span data-t="marquee.price">Bajos Precios en Llaves</span></div>
     <div class="marquee-item" style="opacity:.4">&bull;</div>
-    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Servicio a Domicilio</div>
+    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg><span data-t="marquee.home">Servicio a Domicilio</span></div>
     <div class="marquee-item" style="opacity:.4">&bull;</div>
-    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Duplicados desde $2</div>
+    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg><span data-t="marquee.dup">Duplicados desde $2</span></div>
     <div class="marquee-item" style="opacity:.4">&bull;</div>
-    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Bajos Precios en Llaves</div>
+    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg><span data-t="marquee.price">Bajos Precios en Llaves</span></div>
     <div class="marquee-item" style="opacity:.4">&bull;</div>
-    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>Servicio a Domicilio</div>
+    <div class="marquee-item"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg><span data-t="marquee.home">Servicio a Domicilio</span></div>
     <div class="marquee-item" style="opacity:.4">&bull;</div>
   </div>
 </div>
@@ -602,72 +619,72 @@
 <section id="servicios">
   <div class="max-w px">
     <div class="reveal center">
-      <p class="section-label">Lo que hacemos</p>
-      <h2 class="section-title">Nuestros <span class="text-gold">Servicios</span></h2>
-      <p class="section-desc">Soluciones de cerrajería para tu carro y hogar. Rápido, confiable y a precios accesibles.</p>
+      <p class="section-label" data-t="serv.label">Lo que hacemos</p>
+      <h2 class="section-title"><span data-t="serv.title">Nuestros</span> <span class="text-gold" data-t="serv.title2">Servicios</span></h2>
+      <p class="section-desc" data-t="serv.desc">Soluciones de cerrajería para tu carro y hogar. Rápido, confiable y a precios accesibles.</p>
     </div>
     <div class="services-grid">
       <div class="service-card reveal">
         <div class="sc-bg" style="background-image:url('llaves-quebradas.jpg')"></div>
         <div class="service-card-body">
           <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></div>
-          <div><h3>Llaves Quebradas</h3><p>Extracción profesional sin dañar la chapa</p></div>
+          <div><h3 data-t="s1.name">Llaves Quebradas</h3><p data-t="s1.desc">Extracción profesional sin dañar la chapa</p></div>
         </div>
       </div>
       <div class="service-card reveal reveal-delay-1">
         <div class="sc-bg" style="background-image:url('chapas.jpg')"></div>
         <div class="service-card-body">
           <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          <div><h3>Chapas de Puerta</h3><p>Instalación y reparación de cerraduras</p></div>
+          <div><h3 data-t="s2.name">Chapas de Puerta</h3><p data-t="s2.desc">Instalación y reparación de cerraduras</p></div>
         </div>
       </div>
       <div class="service-card reveal reveal-delay-2">
         <div class="sc-bg" style="background-image:url('llaves-perdidas.jpg')"></div>
         <div class="service-card-body">
           <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-          <div><h3>Llaves Perdidas</h3><p>Duplicados y reemplazos rápidos</p></div>
+          <div><h3 data-t="s3.name">Llaves Perdidas</h3><p data-t="s3.desc">Duplicados y reemplazos rápidos</p></div>
         </div>
       </div>
       <div class="service-card reveal">
         <div class="sc-bg" style="background-image:url('switch.jpg')"></div>
         <div class="service-card-body">
           <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
-          <div><h3>Switch de Encendido</h3><p>Venta e instalación de switch de encendido</p></div>
+          <div><h3 data-t="s4.name">Switch de Encendido</h3><p data-t="s4.desc">Venta e instalación de switch de encendido</p></div>
         </div>
       </div>
       <div class="service-card reveal reveal-delay-1">
         <div class="sc-bg" style="background-image:url('manijas.jpg')"></div>
         <div class="service-card-body">
           <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-          <div><h3>Manijas de Puertas</h3><p>Reparación y reemplazo de manijas</p></div>
+          <div><h3 data-t="s5.name">Manijas de Puertas</h3><p data-t="s5.desc">Reparación y reemplazo de manijas</p></div>
         </div>
       </div>
       <div class="service-card reveal reveal-delay-2">
         <div class="sc-bg" style="background-image:url('puertas-trabadas.jpg')"></div>
         <div class="service-card-body">
           <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div>
-          <div><h3>Puertas Trabadas</h3><p>Apertura sin daños, servicio rápido</p></div>
+          <div><h3 data-t="s6.name">Puertas Trabadas</h3><p data-t="s6.desc">Apertura sin daños, servicio rápido</p></div>
         </div>
       </div>
       <div class="service-card reveal">
         <div class="sc-bg" style="background-image:url('senaleros.jpg')"></div>
         <div class="service-card-body">
           <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg></div>
-          <div><h3>Señaleros de Carro</h3><p>Programación y reemplazo de control remoto</p></div>
+          <div><h3 data-t="s7.name">Señaleros de Carro</h3><p data-t="s7.desc">Programación y reemplazo de control remoto</p></div>
         </div>
       </div>
       <div class="service-card reveal reveal-delay-1">
         <div class="sc-bg" style="background-image:url('domicilio.jpg')"></div>
         <div class="service-card-body">
           <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-          <div><h3>Servicio a Domicilio</h3><p>Vamos a donde nos necesites</p></div>
+          <div><h3 data-t="s8.name">Servicio a Domicilio</h3><p data-t="s8.desc">Vamos a donde nos necesites</p></div>
         </div>
       </div>
       <div class="service-card reveal reveal-delay-2">
         <div class="sc-bg" style="background-image:url('pick-lock.jpg')"></div>
         <div class="service-card-body">
           <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></div>
-          <div><h3>Pick the Lock</h3><p>Apertura de cerraduras de alta seguridad</p></div>
+          <div><h3 data-t="s9.name">Pick the Lock</h3><p data-t="s9.desc">Apertura de cerraduras de alta seguridad</p></div>
         </div>
       </div>
     </div>
@@ -686,22 +703,22 @@
     <div class="llaves-content reveal">
       <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;">
         <div class="service-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-        <p class="section-label" style="margin:0">Alta Tecnología</p>
+        <p class="section-label" style="margin:0" data-t="elec.label">Alta Tecnología</p>
       </div>
-      <h2 class="section-title">Llaves <span class="text-gold">Electrónicas</span></h2>
-      <p style="color:var(--muted);font-size:1.15rem;margin-bottom:1rem;line-height:1.6;">
+      <h2 class="section-title"><span data-t="elec.title">Llaves</span> <span class="text-gold" data-t="elec.title2">Electrónicas</span></h2>
+      <p style="color:var(--muted);font-size:1.15rem;margin-bottom:1rem;line-height:1.6;" data-t="elec.desc">
         Llaves con <strong style="color:var(--gold-light)">chip para carros nuevos.</strong>
         Programación y corte de llaves electrónicas para todo tipo de vehículo.
       </p>
       <ul class="feature-list">
-        <li>Llaves transponder con chip</li>
-        <li>Programación en sitio</li>
-        <li>Fobs y controles remotos</li>
-        <li>Precios accesibles</li>
+        <li data-t="elec.f1">Llaves transponder con chip</li>
+        <li data-t="elec.f2">Programación en sitio</li>
+        <li data-t="elec.f3">Fobs y controles remotos</li>
+        <li data-t="elec.f4">Precios accesibles</li>
       </ul>
       <a href="tel:+15108128740" class="btn-gold">
         <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        Llamar ahora
+        <span data-t="btn.call">Llamar ahora</span>
       </a>
     </div>
   </div>
@@ -714,9 +731,9 @@
   </div>
   <div class="switches-content max-w px">
     <div class="reveal center">
-      <p class="section-label">Venta e Instalación</p>
-      <h2 class="section-title">Switches de <span class="text-gold">Encendido</span></h2>
-      <p class="section-desc" style="margin:0 auto;">Vendemos e instalamos switches de encendido para las marcas más populares.</p>
+      <p class="section-label" data-t="sw.label">Venta e Instalación</p>
+      <h2 class="section-title"><span data-t="sw.title">Switches de</span> <span class="text-gold" data-t="sw.title2">Encendido</span></h2>
+      <p class="section-desc" style="margin:0 auto;" data-t="sw.desc">Vendemos e instalamos switches de encendido para las marcas más populares.</p>
     </div>
     <div class="pills reveal">
       <div class="pill">Honda</div>
@@ -730,14 +747,14 @@
       <div class="pill">Oldsmobile</div>
       <div class="pill">Cadillac</div>
       <div class="pill">Mitsubishi</div>
-      <div class="pill">Y más...</div>
+      <div class="pill" data-t="sw.more">Y más...</div>
     </div>
     <div class="reveal" style="text-align:center;">
       <div class="price-badge">
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <div>
-          <p>Duplicados desde <span class="text-gold">$2</span></p>
-          <small>Precios de mayoreo &bull; Calidad garantizada</small>
+          <p><span data-t="sw.dup">Duplicados desde</span> <span class="text-gold">$2</span></p>
+          <small data-t="sw.quality">Precios de mayoreo &bull; Calidad garantizada</small>
         </div>
       </div>
     </div>
@@ -754,10 +771,10 @@
       <div class="reveal">
         <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;">
           <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h10M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-          <p class="section-label" style="margin:0">Reparación y Venta</p>
+          <p class="section-label" style="margin:0" data-t="vol.label">Reparación y Venta</p>
         </div>
-        <h2 class="section-title">Volantes de <span class="text-gold">Carro</span></h2>
-        <p style="color:var(--muted);font-size:1.1rem;margin-bottom:1.5rem;line-height:1.6;">
+        <h2 class="section-title"><span data-t="vol.title">Volantes de</span> <span class="text-gold" data-t="vol.title2">Carro</span></h2>
+        <p style="color:var(--muted);font-size:1.1rem;margin-bottom:1.5rem;line-height:1.6;" data-t="vol.desc">
           Reparamos y vendemos volantes para múltiples marcas y modelos. Servicio profesional y garantizado.
         </p>
         <div class="brand-pills">
@@ -773,7 +790,7 @@
         </div>
         <a href="tel:+15108128740" class="btn-gold" style="margin-top:.5rem;">
           <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          Consultar precio
+          <span data-t="btn.quote">Consultar precio</span>
         </a>
       </div>
       <div class="img-glow reveal reveal-delay-2">
@@ -787,8 +804,8 @@
 <section id="galeria" style="background:var(--bg2);padding:6rem 0;overflow:hidden;">
   <div class="max-w px">
     <div class="reveal center" style="margin-bottom:3rem;">
-      <p class="section-label">Nuestro Trabajo</p>
-      <h2 class="section-title"><span class="text-gold">Galería</span></h2>
+      <p class="section-label" data-t="gal.label">Nuestro Trabajo</p>
+      <h2 class="section-title"><span class="text-gold" data-t="gal.title">Galería</span></h2>
     </div>
   </div>
 
@@ -828,8 +845,8 @@
 <section id="resenas" style="background:var(--bg);padding:6rem 0;">
   <div class="max-w px">
     <div class="reveal center" style="margin-bottom:3.5rem;">
-      <p class="section-label">Lo que dicen nuestros clientes</p>
-      <h2 class="section-title">Reseñas <span class="text-gold">Verificadas</span></h2>
+      <p class="section-label" data-t="rev.label">Lo que dicen nuestros clientes</p>
+      <h2 class="section-title"><span data-t="rev.title">Reseñas</span> <span class="text-gold" data-t="rev.title2">Verificadas</span></h2>
       <div style="display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:1rem;">
         <div style="display:flex;gap:3px;">
           <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -839,7 +856,7 @@
           <svg viewBox="0 0 24 24" fill="#D4A017" stroke="none" width="22" height="22"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
         </div>
         <span style="color:var(--gold);font-weight:900;font-size:1.1rem;">5.0</span>
-        <span style="color:var(--muted);font-size:.9rem;">· 120+ reseñas en Google</span>
+        <span style="color:var(--muted);font-size:.9rem;" data-t="rev.count">· 120+ reseñas en Google</span>
       </div>
     </div>
 
@@ -965,8 +982,8 @@
     <div class="cta-logo">
       <img src="logo.png" alt="Logo" class="float" />
     </div>
-    <h2 class="cta-h2">¿Necesitas <span class="text-gold">Ayuda?</span></h2>
-    <p class="cta-p">
+    <h2 class="cta-h2"><span data-t="cta.title">¿Necesitas</span> <span class="text-gold" data-t="cta.title2">Ayuda?</span></h2>
+    <p class="cta-p" data-t="cta.desc">
       Llámanos ahora. Atendemos en Richmond y áreas cercanas.<br>
       <strong>Servicio a domicilio disponible.</strong>
     </p>
@@ -981,7 +998,7 @@
       </div>
       <div class="cta-info-item">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Lun – Sáb &middot; 9am – 7pm
+        <span data-t="cta.hours">Lun – Sáb &middot; 9am – 7pm</span>
       </div>
     </div>
   </div>
@@ -1002,7 +1019,7 @@
         <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         (510) 812-8740
       </a>
-      <span>&copy; 2024 Manzano's Locksmith. Todos los derechos reservados.</span>
+      <span data-t="footer.copy">&copy; 2024 Manzano's Locksmith. Todos los derechos reservados.</span>
     </div>
   </div>
 </footer>
@@ -1026,7 +1043,97 @@
     });
   });
 
-  // ── CARRUSEL ──
+  // ── TRADUCCIÓN ──
+const T = {
+  es: {
+    'hero.tag':    'Richmond, CA &bull; Servicio a Domicilio &bull; Bay Area',
+    'hero.desc':   'Cerrajería profesional con <strong>bajos precios.</strong> Llaves electrónicas, duplicados, puertas trabadas y más.',
+    'badge.price': 'Bajos Precios', 'badge.fast': 'Servicio Rápido', 'badge.trust': 'Confiable',
+    'hero.cta':    'Ver Servicios',
+    'marquee.dup': 'Duplicados desde $2', 'marquee.price': 'Bajos Precios en Llaves', 'marquee.home': 'Servicio a Domicilio',
+    'serv.label':  'Lo que hacemos', 'serv.title': 'Nuestros', 'serv.title2': 'Servicios',
+    'serv.desc':   'Soluciones de cerrajería para tu carro y hogar. Rápido, confiable y a precios accesibles.',
+    's1.name':'Llaves Quebradas',   's1.desc':'Extracción profesional sin dañar la chapa',
+    's2.name':'Chapas de Puerta',   's2.desc':'Instalación y reparación de cerraduras',
+    's3.name':'Llaves Perdidas',    's3.desc':'Duplicados y reemplazos rápidos',
+    's4.name':'Switch de Encendido','s4.desc':'Venta e instalación de switch de encendido',
+    's5.name':'Manijas de Puertas', 's5.desc':'Reparación y reemplazo de manijas',
+    's6.name':'Puertas Trabadas',   's6.desc':'Apertura sin daños, servicio rápido',
+    's7.name':'Señaleros de Carro', 's7.desc':'Programación y reemplazo de control remoto',
+    's8.name':'Servicio a Domicilio','s8.desc':'Vamos a donde nos necesites',
+    's9.name':'Pick the Lock',      's9.desc':'Apertura de cerraduras de alta seguridad',
+    'elec.label':'Alta Tecnología', 'elec.title':'Llaves', 'elec.title2':'Electrónicas',
+    'elec.desc':'Llaves con <strong style="color:var(--gold-light)">chip para carros nuevos.</strong> Programación y corte de llaves electrónicas para todo tipo de vehículo.',
+    'elec.f1':'Llaves transponder con chip','elec.f2':'Programación en sitio','elec.f3':'Fobs y controles remotos','elec.f4':'Precios accesibles',
+    'btn.call':'Llamar ahora', 'btn.quote':'Consultar precio',
+    'sw.label':'Venta e Instalación','sw.title':'Switches de','sw.title2':'Encendido',
+    'sw.desc':'Vendemos e instalamos switches de encendido para las marcas más populares.',
+    'sw.more':'Y más...','sw.dup':'Duplicados desde','sw.quality':'Precios de mayoreo &bull; Calidad garantizada',
+    'vol.label':'Reparación y Venta','vol.title':'Volantes de','vol.title2':'Carro',
+    'vol.desc':'Reparamos y vendemos volantes para múltiples marcas y modelos. Servicio profesional y garantizado.',
+    'gal.label':'Nuestro Trabajo','gal.title':'Galería',
+    'rev.label':'Lo que dicen nuestros clientes','rev.title':'Reseñas','rev.title2':'Verificadas',
+    'rev.count':'· 120+ reseñas en Google',
+    'cta.title':'¿Necesitas','cta.title2':'Ayuda?',
+    'cta.desc':'Llámanos ahora. Atendemos en Richmond y áreas cercanas.<br><strong>Servicio a domicilio disponible.</strong>',
+    'cta.hours':'Lun – Sáb &middot; 9am – 7pm',
+    'footer.copy':'&copy; 2024 Manzano\'s Locksmith. Todos los derechos reservados.',
+  },
+  en: {
+    'hero.tag':    'Richmond, CA &bull; Home Service &bull; Bay Area',
+    'hero.desc':   'Professional locksmith with <strong>low prices.</strong> Electronic keys, duplicates, locked doors and more.',
+    'badge.price': 'Low Prices', 'badge.fast': 'Fast Service', 'badge.trust': 'Reliable',
+    'hero.cta':    'Our Services',
+    'marquee.dup': 'Duplicates from $2', 'marquee.price': 'Low Prices on Keys', 'marquee.home': 'Home Service',
+    'serv.label':  'What we do', 'serv.title': 'Our', 'serv.title2': 'Services',
+    'serv.desc':   'Locksmith solutions for your car and home. Fast, reliable and affordable.',
+    's1.name':'Broken Keys',        's1.desc':'Professional extraction without damaging the lock',
+    's2.name':'Door Locks',         's2.desc':'Lock installation and repair',
+    's3.name':'Lost Keys',          's3.desc':'Quick duplicates and replacements',
+    's4.name':'Ignition Switch',    's4.desc':'Sale and installation of ignition switches',
+    's5.name':'Door Handles',       's5.desc':'Door handle repair and replacement',
+    's6.name':'Locked Doors',       's6.desc':'Damage-free opening, fast service',
+    's7.name':'Car Remotes',        's7.desc':'Remote control programming and replacement',
+    's8.name':'Mobile Service',     's8.desc':'We come to where you need us',
+    's9.name':'Pick the Lock',      's9.desc':'High-security lock opening',
+    'elec.label':'High Technology', 'elec.title':'Electronic', 'elec.title2':'Keys',
+    'elec.desc':'Keys with <strong style="color:var(--gold-light)">chip for new cars.</strong> Programming and cutting of electronic keys for all vehicle types.',
+    'elec.f1':'Transponder chip keys','elec.f2':'On-site programming','elec.f3':'Fobs and remote controls','elec.f4':'Affordable prices',
+    'btn.call':'Call now', 'btn.quote':'Get a quote',
+    'sw.label':'Sale & Installation','sw.title':'Ignition','sw.title2':'Switches',
+    'sw.desc':'We sell and install ignition switches for the most popular brands.',
+    'sw.more':'And more...','sw.dup':'Duplicates from','sw.quality':'Wholesale prices &bull; Guaranteed quality',
+    'vol.label':'Repair & Sale','vol.title':'Steering','vol.title2':'Wheels',
+    'vol.desc':'We repair and sell steering wheels for multiple brands and models. Professional and guaranteed service.',
+    'gal.label':'Our Work','gal.title':'Gallery',
+    'rev.label':'What our customers say','rev.title':'Verified','rev.title2':'Reviews',
+    'rev.count':'· 120+ Google reviews',
+    'cta.title':'Need','cta.title2':'Help?',
+    'cta.desc':'Call us now. We serve Richmond and surrounding areas.<br><strong>Mobile service available.</strong>',
+    'cta.hours':'Mon – Sat &middot; 9am – 7pm',
+    'footer.copy':'&copy; 2024 Manzano\'s Locksmith. All rights reserved.',
+  }
+};
+
+let currentLang = 'es';
+
+function applyLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
+  });
+  document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('chat-online').textContent = lang === 'es' ? '● En línea ahora' : '● Online now';
+  document.getElementById('chat-input').placeholder = lang === 'es' ? 'Escribe tu pregunta...' : 'Type your question...';
+  updateChatQuickReplies(lang);
+  localStorage.setItem('manzanos-lang', lang);
+}
+
+function setLang(lang) { applyLang(lang); }
+
+// ── CARRUSEL ──
   (function() {
     const track = document.getElementById('carousel-track');
     const dotsWrap = document.getElementById('carousel-dots');
@@ -1168,6 +1275,9 @@
   .chat-header-info { flex: 1; }
   .chat-header-info strong { display: block; font-size: .9rem; color: #fff; }
   .chat-header-info span { font-size: .72rem; color: #4ade80; }
+  .chat-lang-toggle { display:flex; gap:0; border:1px solid rgba(255,255,255,.15); border-radius:.5rem; overflow:hidden; margin-left:auto; }
+  .chat-lang-btn { padding:.25rem .5rem; font-size:.7rem; font-weight:900; border:none; background:transparent; color:var(--muted); cursor:pointer; transition:background .2s,color .2s; }
+  .chat-lang-btn.active { background:var(--gold); color:#000; }
   .chat-close {
     background: none; border: none; cursor: pointer; color: var(--muted);
     padding: .25rem; border-radius: .5rem; transition: color .2s;
@@ -1281,7 +1391,11 @@
     <div class="chat-avatar"><img src="logo.png" alt="Manzano's" /></div>
     <div class="chat-header-info">
       <strong>Manzano's Locksmith</strong>
-      <span>● En línea ahora</span>
+      <span id="chat-online">● En línea ahora</span>
+    </div>
+    <div class="chat-lang-toggle">
+      <button class="chat-lang-btn active" id="chat-btn-es" onclick="setChatLang('es')">ES</button>
+      <button class="chat-lang-btn" id="chat-btn-en" onclick="setChatLang('en')">EN</button>
     </div>
     <button class="chat-close" onclick="toggleChat()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -1311,6 +1425,45 @@
 
 <script>
 // ── CHATBOT ──
+let chatLang = 'es';
+
+function setChatLang(lang) {
+  chatLang = lang;
+  document.getElementById('chat-btn-es').classList.toggle('active', lang === 'es');
+  document.getElementById('chat-btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('chat-online').textContent = lang === 'es' ? '● En línea ahora' : '● Online now';
+  document.getElementById('chat-input').placeholder = lang === 'es' ? 'Escribe tu pregunta...' : 'Type your question...';
+  updateChatQuickReplies(lang);
+  // sync with page lang toggle
+  applyLang(lang);
+}
+
+function updateChatQuickReplies(lang) {
+  const qr = document.getElementById('quick-replies');
+  if (!qr) return;
+  if (lang === 'en') {
+    qr.innerHTML = `
+      <button class="qr-btn" onclick="sendQuick('💰 How much do duplicates cost?')">💰 Duplicates</button>
+      <button class="qr-btn" onclick="sendQuick('🔑 Electronic keys')">🔑 Electronic keys</button>
+      <button class="qr-btn" onclick="sendQuick('🚗 Locked doors')">🚗 Locked doors</button>
+      <button class="qr-btn" onclick="sendQuick('📍 Where are you located?')">📍 Location</button>
+      <button class="qr-btn" onclick="sendQuick('🕐 What are your hours?')">🕐 Hours</button>
+      <button class="qr-btn" onclick="sendQuick('🔧 Ignition switch')">🔧 Ignition switch</button>
+      <button class="qr-btn" onclick="sendQuick('🏠 Mobile service')">🏠 Mobile service</button>
+      <button class="qr-btn" onclick="sendQuick('📞 Contact')">📞 Contact</button>`;
+  } else {
+    qr.innerHTML = `
+      <button class="qr-btn" onclick="sendQuick('💰 ¿Cuánto cuestan los duplicados?')">💰 Duplicados</button>
+      <button class="qr-btn" onclick="sendQuick('🔑 Llaves electrónicas')">🔑 Llaves electrónicas</button>
+      <button class="qr-btn" onclick="sendQuick('🚗 Puertas trabadas')">🚗 Puertas trabadas</button>
+      <button class="qr-btn" onclick="sendQuick('📍 ¿Dónde están?')">📍 Ubicación</button>
+      <button class="qr-btn" onclick="sendQuick('🕐 ¿Cuál es el horario?')">🕐 Horario</button>
+      <button class="qr-btn" onclick="sendQuick('🔧 Switch de encendido')">🔧 Switch encendido</button>
+      <button class="qr-btn" onclick="sendQuick('🏠 Servicio a domicilio')">🏠 A domicilio</button>
+      <button class="qr-btn" onclick="sendQuick('📞 Contacto')">📞 Contacto</button>`;
+  }
+}
+
 const RESPONSES = [
   {
     keys: ['duplicado','duplicados','precio','cuanto','cuesta','costo','barato','2','dos'],
@@ -1386,12 +1539,33 @@ const RESPONSES = [
 
 const DEFAULT = 'Gracias por tu mensaje. Para darte la mejor atención, te recomendamos llamarnos directamente. 😊';
 
+const RESPONSES_EN = [
+  { keys:['duplicate','duplicates','price','cost','cheap','2','how much'], reply:'Best prices in the Bay Area! 🔑<br><br>• <strong>Key duplicates:</strong> from <strong>$2</strong><br>• Electronic chip keys: ask for quote<br>• Ignition switch: ask for quote<br><br>Need more info?', contact:true },
+  { keys:['electronic','chip','transponder','program','fob','remote','new car'], reply:'Yes, we make electronic keys! ⚡<br><br>• Transponder / chip keys for new cars<br>• On-site programming<br>• Fobs and remote controls<br>• Most makes and models<br><br>Call us for a quote.', contact:true },
+  { keys:['locked','stuck','locked out','pick','lock','door','open'], reply:'We are on our way! 🚗<br><br>• Locked door opening without damage<br>• Pick the lock for high-security locks<br>• Fast and guaranteed service<br>• Serving Richmond and Bay Area<br><br>Call us right now.', contact:true },
+  { keys:['switch','ignition','start','ignition switch'], reply:'We sell and install ignition switches! 🔧<br><br>Available for:<br><strong>Honda • Ford • Nissan • Chevy • Toyota • Dodge • Jeep • Buick • Cadillac • Mitsubishi</strong> and more.<br><br>What is your make and model?', contact:true },
+  { keys:['steering','wheel','volante'], reply:'We repair and sell steering wheels 🚘<br><br>Makes we carry:<br><strong>Chevy, Ford, Buick, Oldsmobile, Jeep, Dodge, Cadillac, Honda, Mitsubishi</strong><br><br>Contact us to check availability.', contact:true },
+  { keys:['mobile','home','visit','come to','house','domicilio'], reply:'Yes, we offer mobile service! 🏠<br><br>• Covering Richmond and the entire Bay Area<br>• Full equipment on-site<br>• No extra charge for local service calls<br><br>What city are you in?', contact:true },
+  { keys:['address','location','where','map','directions'], reply:'📍 Find us at:<br><br><strong>991 13th Street<br>Richmond, CA 94801</strong><br><br>Mobile service also available across the Bay Area.', maps:true, contact:true },
+  { keys:['hours','schedule','open','when','days'], reply:'🕐 Our business hours:<br><br>• <strong>Monday – Saturday:</strong> 9:00am – 7:00pm<br>• Sundays: by appointment<br><br>For emergencies, call us directly.', contact:true },
+  { keys:['handle','door handle'], reply:'We repair and replace door handles 🚪<br><br>• Interior and exterior<br>• Most makes and models<br>• Quick installation<br><br>Call us to check availability.', contact:true },
+  { keys:['remote','fob','signal','alarm'], reply:'We program and replace car remotes 📡<br><br>• Key fobs and remote controls<br>• On-site programming<br>• Multiple makes and models<br><br>What is your car brand?', contact:true },
+  { keys:['contact','call','phone','number','reach'], reply:'We are happy to help! 📞<br><br>Contact us by phone right now:', contact:true, maps:true },
+  { keys:['hi','hello','hey','good'], reply:'Hello! 👋 Welcome to <strong>Manzano\'s Locksmith</strong>.<br><br>I\'m the virtual assistant. I can help with info about our services, prices and location.<br><br>How can I help you today?', contact:false },
+  { keys:['thank','thanks'], reply:'You\'re welcome! 😊<br>If you need anything else, we are here. Call us anytime!', contact:true },
+  { keys:['key','keys','broken','lost','replace'], reply:'We can help! 🔑<br><br>• <strong>Broken keys:</strong> extraction without damaging the lock<br>• <strong>Lost keys:</strong> duplicate or new key from $2<br>• In-shop or mobile service<br><br>Call us and we\'ll take care of you.', contact:true },
+];
+const DEFAULT_EN = 'Thank you for your message. For the best service, we recommend calling us directly. 😊';
+
 function getReply(text) {
   const t = text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-  for (const r of RESPONSES) {
+  const lang = chatLang;
+  const list = lang === 'en' ? RESPONSES_EN : RESPONSES;
+  const def  = lang === 'en' ? DEFAULT_EN : DEFAULT;
+  for (const r of list) {
     if (r.keys.some(k => t.includes(k))) return r;
   }
-  return { reply: DEFAULT, contact: true, maps: false };
+  return { reply: def, contact: true, maps: false };
 }
 
 function contactBtns(maps) {
