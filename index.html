@@ -804,5 +804,379 @@
     });
   }
 </script>
+
+<!-- ── CHATBOT ── -->
+<style>
+  /* Botón flotante */
+  #chat-btn {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--gold); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(212,160,23,.5);
+    animation: pulse-gold 2.5s ease-in-out infinite;
+    transition: transform .2s;
+  }
+  #chat-btn:hover { transform: scale(1.1); }
+  #chat-btn svg { width: 28px; height: 28px; color: #000; }
+  #chat-badge {
+    position: absolute; top: -4px; right: -4px;
+    width: 18px; height: 18px; background: #ef4444; border-radius: 50%;
+    font-size: .65rem; font-weight: 900; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid #0a0a0a;
+  }
+
+  /* Ventana del chat */
+  #chat-window {
+    position: fixed; bottom: 5.5rem; right: 1.5rem; z-index: 998;
+    width: 340px; max-width: calc(100vw - 2rem);
+    background: #111; border: 1px solid rgba(212,160,23,.25);
+    border-radius: 1.25rem; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,.6);
+    display: none; flex-direction: column;
+    max-height: 520px;
+    animation: chat-in .3s ease;
+  }
+  @keyframes chat-in {
+    from { opacity:0; transform: translateY(20px) scale(.96); }
+    to   { opacity:1; transform: none; }
+  }
+  #chat-window.open { display: flex; }
+
+  /* Header */
+  .chat-header {
+    background: linear-gradient(135deg, #1a1500, #2a1f00);
+    border-bottom: 1px solid rgba(212,160,23,.2);
+    padding: .875rem 1rem;
+    display: flex; align-items: center; gap: .75rem;
+  }
+  .chat-avatar {
+    width: 38px; height: 38px; border-radius: 50%; overflow: hidden;
+    border: 2px solid var(--gold); flex-shrink: 0;
+  }
+  .chat-avatar img { width: 100%; height: 100%; object-fit: contain; background:#1a1500; }
+  .chat-header-info { flex: 1; }
+  .chat-header-info strong { display: block; font-size: .9rem; color: #fff; }
+  .chat-header-info span { font-size: .72rem; color: #4ade80; }
+  .chat-close {
+    background: none; border: none; cursor: pointer; color: var(--muted);
+    padding: .25rem; border-radius: .5rem; transition: color .2s;
+  }
+  .chat-close:hover { color: #fff; }
+  .chat-close svg { width: 18px; height: 18px; }
+
+  /* Mensajes */
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 1rem;
+    display: flex; flex-direction: column; gap: .75rem;
+    scrollbar-width: thin; scrollbar-color: rgba(212,160,23,.2) transparent;
+  }
+  .msg { display: flex; gap: .5rem; align-items: flex-end; }
+  .msg.bot { justify-content: flex-start; }
+  .msg.user { justify-content: flex-end; }
+  .msg-bubble {
+    max-width: 80%; padding: .6rem .9rem; border-radius: 1rem;
+    font-size: .85rem; line-height: 1.5;
+  }
+  .msg.bot .msg-bubble {
+    background: #1e1e1e; border: 1px solid rgba(255,255,255,.08);
+    border-bottom-left-radius: .25rem; color: #e2e8f0;
+  }
+  .msg.user .msg-bubble {
+    background: var(--gold); color: #000; font-weight: 700;
+    border-bottom-right-radius: .25rem;
+  }
+  .msg-bot-icon {
+    width: 28px; height: 28px; border-radius: 50%; overflow: hidden;
+    flex-shrink: 0; border: 1px solid rgba(212,160,23,.3);
+  }
+  .msg-bot-icon img { width: 100%; height: 100%; object-fit: contain; background:#1a1500; }
+
+  /* Botones de contacto en mensajes */
+  .chat-contact-btns { display: flex; flex-direction: column; gap: .5rem; margin-top: .5rem; }
+  .chat-contact-btn {
+    display: flex; align-items: center; gap: .5rem;
+    padding: .5rem .875rem; border-radius: .75rem; border: none; cursor: pointer;
+    font-weight: 700; font-size: .82rem; text-decoration: none;
+    transition: transform .15s, opacity .15s;
+  }
+  .chat-contact-btn:hover { transform: scale(1.02); opacity: .9; }
+  .chat-contact-btn.call { background: var(--gold); color: #000; }
+  .chat-contact-btn.maps { background: #1a73e8; color: #fff; }
+  .chat-contact-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  /* Quick replies */
+  .quick-replies {
+    display: flex; flex-wrap: wrap; gap: .4rem;
+    padding: .5rem 1rem;
+    border-top: 1px solid rgba(255,255,255,.05);
+  }
+  .qr-btn {
+    padding: .4rem .8rem; border-radius: 999px;
+    border: 1px solid rgba(212,160,23,.35); background: rgba(212,160,23,.08);
+    color: var(--gold-light); font-size: .75rem; font-weight: 700;
+    cursor: pointer; transition: background .2s, border-color .2s;
+    white-space: nowrap;
+  }
+  .qr-btn:hover { background: rgba(212,160,23,.2); border-color: rgba(212,160,23,.6); }
+
+  /* Input */
+  .chat-input-row {
+    display: flex; gap: .5rem; padding: .75rem;
+    border-top: 1px solid rgba(255,255,255,.06);
+    background: #0d0d0d;
+  }
+  #chat-input {
+    flex: 1; background: #1e1e1e; border: 1px solid rgba(255,255,255,.1);
+    border-radius: .75rem; padding: .5rem .875rem;
+    color: #fff; font-size: .85rem; font-family: inherit; outline: none;
+    transition: border-color .2s;
+  }
+  #chat-input:focus { border-color: rgba(212,160,23,.4); }
+  #chat-input::placeholder { color: #4b5563; }
+  #chat-send {
+    width: 36px; height: 36px; border-radius: .75rem; flex-shrink: 0;
+    background: var(--gold); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, transform .15s;
+  }
+  #chat-send:hover { background: var(--gold-light); transform: scale(1.05); }
+  #chat-send svg { width: 16px; height: 16px; color: #000; }
+
+  /* Typing indicator */
+  .typing { display: flex; gap: 4px; align-items: center; padding: .5rem 0; }
+  .typing span {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--gold);
+    animation: typing-bounce .9s infinite ease-in-out;
+  }
+  .typing span:nth-child(2) { animation-delay: .15s; }
+  .typing span:nth-child(3) { animation-delay: .3s; }
+  @keyframes typing-bounce {
+    0%,60%,100% { transform: translateY(0); opacity:.4; }
+    30%          { transform: translateY(-6px); opacity:1; }
+  }
+</style>
+
+<!-- Botón flotante -->
+<button id="chat-btn" onclick="toggleChat()" aria-label="Abrir chat">
+  <span id="chat-badge">1</span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+</button>
+
+<!-- Ventana del chat -->
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-avatar"><img src="logo.png" alt="Manzano's" /></div>
+    <div class="chat-header-info">
+      <strong>Manzano's Locksmith</strong>
+      <span>● En línea ahora</span>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="chat-messages" id="chat-messages"></div>
+
+  <div class="quick-replies" id="quick-replies">
+    <button class="qr-btn" onclick="sendQuick('💰 ¿Cuánto cuestan los duplicados?')">💰 Duplicados</button>
+    <button class="qr-btn" onclick="sendQuick('🔑 Llaves electrónicas')">🔑 Llaves electrónicas</button>
+    <button class="qr-btn" onclick="sendQuick('🚗 Puertas trabadas')">🚗 Puertas trabadas</button>
+    <button class="qr-btn" onclick="sendQuick('📍 ¿Dónde están?')">📍 Ubicación</button>
+    <button class="qr-btn" onclick="sendQuick('🕐 ¿Cuál es el horario?')">🕐 Horario</button>
+    <button class="qr-btn" onclick="sendQuick('🔧 Switch de encendido')">🔧 Switch encendido</button>
+    <button class="qr-btn" onclick="sendQuick('🏠 Servicio a domicilio')">🏠 A domicilio</button>
+    <button class="qr-btn" onclick="sendQuick('📞 Contacto')">📞 Contacto</button>
+  </div>
+
+  <div class="chat-input-row">
+    <input id="chat-input" type="text" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter') sendMsg()" />
+    <button id="chat-send" onclick="sendMsg()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// ── CHATBOT ──
+const RESPONSES = [
+  {
+    keys: ['duplicado','duplicados','precio','cuanto','cuesta','costo','barato','2','dos'],
+    reply: '¡Tenemos los mejores precios del Bay Area! 🔑<br><br>• <strong>Duplicados de llave:</strong> desde <strong>$2</strong><br>• Llaves electrónicas con chip: consultar<br>• Switch de encendido: consultar precio<br><br>¿Quieres más información?',
+    contact: true
+  },
+  {
+    keys: ['electronica','electrónica','chip','transponder','programar','programacion','nueva'],
+    reply: '¡Sí hacemos llaves electrónicas! ⚡<br><br>• Llaves con chip/transponder para carros nuevos<br>• Programación en sitio o a domicilio<br>• Fobs y controles remotos<br>• Compatible con la mayoría de marcas<br><br>Llámanos para cotizar tu modelo.',
+    contact: true
+  },
+  {
+    keys: ['trabada','trabadas','encerrado','abrir puerta','pick','lock','cerrada'],
+    reply: '¡Te ayudamos de inmediato! 🚗<br><br>• Apertura de puertas trabadas sin daño<br>• Pick the lock para cerraduras de alta seguridad<br>• Servicio rápido y garantizado<br>• Atención en Richmond y Bay Area<br><br>Llámanos ahora mismo.',
+    contact: true
+  },
+  {
+    keys: ['switch','encendido','arranque','arrancar','ignition'],
+    reply: '¡Vendemos e instalamos switches de encendido! 🔧<br><br>Disponible para:<br><strong>Honda • Ford • Nissan • Chevy • Toyota • Dodge • Jeep • Buick • Cadillac • Mitsubishi</strong> y más.<br><br>¿Cuál es tu marca y modelo?',
+    contact: true
+  },
+  {
+    keys: ['volante','steering','wheel'],
+    reply: 'Reparamos y vendemos volantes de carro 🚘<br><br>Marcas que manejamos:<br><strong>Chevy, Ford, Buick, Oldsmobile, Jeep, Dodge, Cadillac, Honda, Mitsubishi</strong><br><br>Contáctanos para verificar disponibilidad.',
+    contact: true
+  },
+  {
+    keys: ['domicilio','a domicilio','casa','llevan','vienen','visita'],
+    reply: '¡Sí, tenemos servicio a domicilio! 🏠<br><br>• Cubrimos Richmond y todo el Bay Area<br>• Llevamos el equipo completo<br>• Sin cargo extra por traslado en zona local<br><br>¿En qué ciudad estás?',
+    contact: true
+  },
+  {
+    keys: ['direccion','dirección','donde','ubicacion','ubicación','lugar','dónde','mapa'],
+    reply: '📍 Nos encuentras en:<br><br><strong>991 13th Street<br>Richmond, CA 94801</strong><br><br>También tenemos servicio a domicilio en todo el Bay Area.',
+    maps: true, contact: true
+  },
+  {
+    keys: ['horario','hora','horas','abierto','abren','cuando','cuándo','dias','días'],
+    reply: '🕐 Nuestro horario de atención:<br><br>• <strong>Lunes – Sábado:</strong> 9:00am – 7:00pm<br>• Domingos: bajo consulta<br><br>Para emergencias llámanos directamente.',
+    contact: true
+  },
+  {
+    keys: ['manija','manijas','handle','palanca'],
+    reply: 'Reparamos y reemplazamos manijas de puertas 🚪<br><br>• Interior y exterior<br>• Para la mayoría de marcas y modelos<br>• Instalación rápida<br><br>Llámanos para verificar disponibilidad.',
+    contact: true
+  },
+  {
+    keys: ['señalero','señaleros','control remoto','fob','alarma','remote'],
+    reply: 'Programamos y reemplazamos señaleros de carro 📡<br><br>• Key fobs y controles remotos<br>• Programación en sitio<br>• Múltiples marcas y modelos<br><br>¿De qué marca es tu carro?',
+    contact: true
+  },
+  {
+    keys: ['contacto','llamar','teléfono','telefono','número','numero','whatsapp','comunicar'],
+    reply: '¡Con gusto te atendemos! 📞<br><br>Puedes contactarnos por teléfono ahora mismo:',
+    contact: true, maps: true
+  },
+  {
+    keys: ['hola','hi','hello','buenas','buenos','saludos','hey'],
+    reply: '¡Hola! 👋 Bienvenido a <strong>Manzano\'s Locksmith</strong>.<br><br>Soy el asistente virtual. Puedo ayudarte con información sobre nuestros servicios, precios y ubicación.<br><br>¿En qué te puedo ayudar hoy?',
+    contact: false
+  },
+  {
+    keys: ['gracias','thanks','thank'],
+    reply: '¡De nada! Con gusto. 😊<br>Si necesitas algo más, aquí estamos. ¡Llámanos cuando quieras!',
+    contact: true
+  },
+  {
+    keys: ['llave','llaves','quebrada','quebradas','perdida','perdidas','rota'],
+    reply: '¡Podemos ayudarte! 🔑<br><br>• <strong>Llaves quebradas:</strong> extracción sin dañar la chapa<br>• <strong>Llaves perdidas:</strong> duplicado o llave nueva desde $2<br>• Servicio en local o a domicilio<br><br>Llámanos y te atendemos de inmediato.',
+    contact: true
+  },
+];
+
+const DEFAULT = 'Gracias por tu mensaje. Para darte la mejor atención, te recomendamos llamarnos directamente. 😊';
+
+function getReply(text) {
+  const t = text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  for (const r of RESPONSES) {
+    if (r.keys.some(k => t.includes(k))) return r;
+  }
+  return { reply: DEFAULT, contact: true, maps: false };
+}
+
+function contactBtns(maps) {
+  return `<div class="chat-contact-btns">
+    <a class="chat-contact-btn call" href="tel:+15108128740">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Llamar: (510) 812-8740
+    </a>
+    ${maps ? `<a class="chat-contact-btn maps" href="https://maps.google.com/?q=991+13th+Street+Richmond+CA+94801" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Ver en Google Maps
+    </a>` : ''}
+  </div>`;
+}
+
+function addMsg(html, type) {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = `msg ${type}`;
+  if (type === 'bot') {
+    div.innerHTML = `<div class="msg-bot-icon"><img src="logo.png"/></div><div class="msg-bubble">${html}</div>`;
+  } else {
+    div.innerHTML = `<div class="msg-bubble">${html}</div>`;
+  }
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg bot'; div.id = 'typing-indicator';
+  div.innerHTML = `<div class="msg-bot-icon"><img src="logo.png"/></div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+function botReply(userText) {
+  showTyping();
+  setTimeout(() => {
+    removeTyping();
+    const r = getReply(userText);
+    let html = r.reply;
+    if (r.contact) html += contactBtns(r.maps || false);
+    addMsg(html, 'bot');
+  }, 900 + Math.random() * 400);
+}
+
+function sendMsg() {
+  const inp = document.getElementById('chat-input');
+  const text = inp.value.trim();
+  if (!text) return;
+  addMsg(text, 'user');
+  inp.value = '';
+  botReply(text);
+}
+
+function sendQuick(text) {
+  addMsg(text, 'user');
+  botReply(text);
+}
+
+let chatOpen = false;
+function toggleChat() {
+  const win = document.getElementById('chat-window');
+  const badge = document.getElementById('chat-badge');
+  chatOpen = !chatOpen;
+  win.classList.toggle('open', chatOpen);
+  if (chatOpen) {
+    badge.style.display = 'none';
+    if (document.getElementById('chat-messages').children.length === 0) {
+      setTimeout(() => {
+        showTyping();
+        setTimeout(() => {
+          removeTyping();
+          addMsg('¡Hola! 👋 Bienvenido a <strong>Manzano\'s Locksmith</strong>.<br><br>Estoy aquí para ayudarte. Puedes preguntarme sobre servicios, precios, horarios o ubicación. También puedes usar los botones de abajo. 😊', 'bot');
+        }, 800);
+      }, 300);
+    }
+  }
+}
+
+// Mostrar badge después de 3 segundos si no han abierto el chat
+setTimeout(() => {
+  if (!chatOpen) {
+    const badge = document.getElementById('chat-badge');
+    badge.style.display = 'flex';
+  }
+}, 3000);
+</script>
 </body>
 </html>
